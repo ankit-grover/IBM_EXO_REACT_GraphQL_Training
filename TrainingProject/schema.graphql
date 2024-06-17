@@ -3,23 +3,24 @@ type Query {
 }
 
 type oldEmployee implements Employee {
-    id: Int!,
+    id: ID!,
     name: String!,
     skills: [Skills],
     resignationDate: String
 }
 type currentEmployee implements Employee {
-    id: Int!,
+    id: ID!,
     skills: [Skills],
     name: String!
 }
 
 interface Employee {
-    id: Int!,
+    id: ID!,
     name: String!
 }
 
 type Skills {
+    id: ID!
     skill: String
 }
 

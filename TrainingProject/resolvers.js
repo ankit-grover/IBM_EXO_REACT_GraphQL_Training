@@ -1,29 +1,47 @@
 export const resolversExample = {
     Query: {
         employee: () => {
-            return [
-                {
-                __typename: "oldEmployee",
-                id: 1,
-                name: 'Ramesh',
-                skills:skills,
-                resignationDate: '10-04-2024',
-                 },
-                {
-                __typename: "currentEmployee",
-                id: 2,
-                skills: skills,
-                name: 'Suresh',
-                },
-            ];
-        }
+            return employees;
+        },
+    },
+    oldEmployee:{
+        skills : (employee) => {
+            return skillsResponse.filter((skills) => skills.id === employee.id);
+        },
+    },
+    currentEmployee:{
+        skills : (employee) => {
+            return skillsResponse.filter((skills) => skills.id === employee.id);
+        },
     },
 };
-const skills = [
+const skillsResponse = [
     {
+        id: 1,
         skill: 'Java'
     },
     {
+        id:2,
         skill: 'GraphQl'
     }
+];
+
+const employees = [
+    {
+    __typename: "oldEmployee",
+    id: 1,
+    name: 'Ramesh',
+    skills: (employee) => {
+        return skillsResponse.filter((skills) => skills.id === employee.id);
+    },
+    resignationDate: '10-04-2024',
+     },
+    {
+    __typename: "currentEmployee",
+    id: 2,
+    skills: (employee) => {
+        return skillsResponse.filter((skills) => skills.id === employee.id);
+    },
+    name: 'Suresh',
+    },
 ];
