@@ -1,0 +1,26 @@
+type Query {
+        employee: [Employeedetails]
+}
+
+type oldEmployee implements Employee {
+    id: Int!,
+    name: String!,
+    skills: [Skills],
+    resignationDate: String
+}
+type currentEmployee implements Employee {
+    id: Int!,
+    skills: [Skills],
+    name: String!
+}
+
+interface Employee {
+    id: Int!,
+    name: String!
+}
+
+type Skills {
+    skill: String
+}
+
+union Employeedetails = oldEmployee | currentEmployee
