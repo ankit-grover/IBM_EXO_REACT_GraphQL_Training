@@ -1,7 +1,9 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
 import { resolversExample } from "./resolvers.js";
 import { readFile } from 'node:fs/promises';
+import express from 'express';
+import cors from 'cors';
+import {expressMiddleware as apolloMiddleWare} from '@apollo/server/express4';
 
 const PORT = 9001;
 
@@ -10,9 +12,15 @@ const typeDefsExample = await readFile(
     "utf-8"
   );
 
-
-const server = new ApolloServer({ 
+  const app = express();
+const apolloServer = new ApolloServer({ 
     typeDefs : [typeDefsExample], 
     resolvers: [resolversExample] });
-const {url} = await startStandaloneServer(server, { listen: { port: PORT } });
-console.log(`Server running at ${url}`);
+    await apolloServer.start();
+    app.use(cors(),express.json(), apolloMiddleWare(apolloServer));
+    app.use('/graphql', apolloMiddleWare(apolloServer));
+    
+    app.listen({ port: PORT }, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
+    });

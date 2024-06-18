@@ -1,27 +1,20 @@
 type Query {
-        employee: [Employeedetails]
+        employees: [Employee]
 }
 
-type oldEmployee implements Employee {
+type Employee {
     id: ID!,
     name: String!,
     skills: [Skills],
     resignationDate: String
 }
-type currentEmployee implements Employee {
-    id: ID!,
-    skills: [Skills],
-    name: String!
-}
-
-interface Employee {
-    id: ID!,
-    name: String!
-}
 
 type Skills {
-    id: ID!
+    id: String!
     skill: String
 }
 
-union Employeedetails = oldEmployee | currentEmployee
+type Mutation {
+    createEmployee(name: String!, resignationDate: String): Employee
+}
+

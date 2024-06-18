@@ -1,47 +1,35 @@
+import { createEmployee, getEmployees } from "./db/employee.js";
+
 export const resolversExample = {
     Query: {
-        employee: () => {
-            return employees;
-        },
+        employees: () => getEmployees(),
     },
-    oldEmployee:{
+    Employee:{
         skills : (employee) => {
             return skillsResponse.filter((skills) => skills.id === employee.id);
         },
+        resignationDate: (employee) =>  toIsoDate(employee.resignation),
     },
-    currentEmployee:{
-        skills : (employee) => {
-            return skillsResponse.filter((skills) => skills.id === employee.id);
+    Mutation: {
+        createEmployee: (_root, { name, resignationDate }) => {
+          return createEmployee({ name, resignationDate });
         },
-    },
+      },
 };
 const skillsResponse = [
     {
-        id: 1,
+        id: '1',
         skill: 'Java'
     },
     {
-        id:2,
+        id:'2',
         skill: 'GraphQl'
     }
 ];
 
-const employees = [
-    {
-    __typename: "oldEmployee",
-    id: 1,
-    name: 'Ramesh',
-    skills: (employee) => {
-        return skillsResponse.filter((skills) => skills.id === employee.id);
-    },
-    resignationDate: '10-04-2024',
-     },
-    {
-    __typename: "currentEmployee",
-    id: 2,
-    skills: (employee) => {
-        return skillsResponse.filter((skills) => skills.id === employee.id);
-    },
-    name: 'Suresh',
-    },
-];
+function toIsoDate(value) {
+    if(!value) {
+        return value;
+    }
+    return value.slice(0,"yyyy-mm-dd".length);
+}
