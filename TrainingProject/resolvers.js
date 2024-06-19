@@ -31,17 +31,11 @@ const employees = [
     __typename: "oldEmployee",
     id: 1,
     name: 'Ramesh',
-    skills: (employee) => {
-        return skillsResponse.filter((skills) => skills.id === employee.id);
-    },
     resignationDate: '10-04-2024',
      },
     {
     __typename: "currentEmployee",
     id: 2,
-    skills: (employee) => {
-        return skillsResponse.filter((skills) => skills.id === employee.id);
-    },
     name: 'Suresh',
     },
 ];
